@@ -25,8 +25,6 @@ The baseline Logistic Regression model achieved the following results on the tes
 - **Precision (No):** 0.85  
 - **Recall (No):** 0.84  
 
-![Confusion Matrix – Logistic Regression Baseline](../notebooks/figures/confusion_matrix.png)
-
 
 This performance significantly outperforms the naïve majority-class baseline (~70% accuracy), confirming that the dataset contains strong predictive signal.
 
