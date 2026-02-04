@@ -24,8 +24,8 @@ TARGET_MAPPING = {
 }
 
 
-
 # Preprocessing
+
 
 def preprocess_data(data_path, output_dir):
     """
@@ -36,9 +36,8 @@ def preprocess_data(data_path, output_dir):
 
     df = pd.read_csv(data_path)
 
-    
     # Target mapping
-   
+
     y = df["shortlisted"].map(TARGET_MAPPING)
 
     if y.isnull().any():
@@ -46,7 +45,6 @@ def preprocess_data(data_path, output_dir):
 
     X = df.drop(columns=["shortlisted"])
 
-    
     # Feature transformations
 
     X["education_level"] = X["education_level"].map(EDUCATION_MAPPING)
@@ -54,9 +52,8 @@ def preprocess_data(data_path, output_dir):
     if X["education_level"].isnull().any():
         raise ValueError("Education level contains unmapped values")
 
-
     # Train / Val / Test split
-  
+
     Logger.info("Splitting data into train / validation / test")
 
     X_train, X_temp, y_train, y_temp = train_test_split(
@@ -75,9 +72,8 @@ def preprocess_data(data_path, output_dir):
         stratify=y_temp,
     )
 
-    
     # Class balance reporting
-   
+
     def class_dist(y_series):
         return y_series.value_counts(normalize=True).to_dict()
 
@@ -89,9 +85,8 @@ def preprocess_data(data_path, output_dir):
 
     Logger.info(f"Class distribution: {class_distribution}")
 
-
     # Save artifacts
-    
+
     output_dir.mkdir(parents=True, exist_ok=True)
 
     X_train.to_csv(output_dir / "X_train.csv", index=False)

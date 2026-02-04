@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append("/opt/airflow")
 
 from airflow import DAG
@@ -12,7 +13,6 @@ from src.validate_data import validate_dataset, write_validation_report
 from src.preprocess import preprocess_data
 from src.train import train
 from src.config import load_config
-
 
 with DAG(
     dag_id="resume_screening_training_pipeline",
@@ -59,13 +59,11 @@ with DAG(
             output_dir=Path("/opt/airflow/data/processed"),
         )
 
-
     # Training
     @task
     def train_model(_):
         context = get_current_context()
         conf = context["dag_run"].conf
-        
 
         CONFIG = load_config("/opt/airflow/configs/train.yaml")
 
@@ -73,7 +71,6 @@ with DAG(
             CONFIG["model"]["selected"] = conf["model_name"]
 
         return train(CONFIG)
-
 
     # DAG wiring
     ingested = ingest()

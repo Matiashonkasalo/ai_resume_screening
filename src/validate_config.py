@@ -39,7 +39,6 @@ def validate_config(config):
     if class_weight not in SUPPORTED_CLASS_WEIGHT:
         raise ValueError(f"Unsupported class_weight: {class_weight}")
 
-
     # Tuning validation
 
     if not isinstance(config["tuning"]["enabled"], bool):

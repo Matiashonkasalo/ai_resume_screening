@@ -34,8 +34,8 @@ def fail_check(report, name, details=None):
     report["status"] = "FAIL"
 
 
-
 # Main validation function
+
 
 def validate_dataset(data_path):
     Logger.info(f"Starting validation for {data_path}")
@@ -54,15 +54,13 @@ def validate_dataset(data_path):
         "status": "PASS",
     }
 
-   
     # Basic sanity
-   
+
     if df.empty:
         raise ValueError("Dataset is empty")
 
     pass_check(report, "dataset_not_empty", {"rows": len(df)})
 
-   
     # Schema check
 
     missing_cols = EXPECTED_SCHEMA - set(df.columns)
@@ -86,8 +84,8 @@ def validate_dataset(data_path):
             },
         )
 
-    # Null values 
-   
+    # Null values
+
     null_counts = df.isnull().sum().to_dict()
 
     if any(v > 0 for v in null_counts.values()):
@@ -103,9 +101,8 @@ def validate_dataset(data_path):
     else:
         pass_check(report, "nulls")
 
-   
-    # Numeric sanity 
-    
+    # Numeric sanity
+
     critical_numeric = {
         "years_experience_negative": int((df["years_experience"] < 0).sum()),
         "project_count_negative": int((df["project_count"] < 0).sum()),
@@ -117,8 +114,8 @@ def validate_dataset(data_path):
     else:
         pass_check(report, "numeric_critical")
 
-    # Numeric sanity 
-  
+    # Numeric sanity
+
     non_critical_numeric = {
         "skills_score_out_of_range": int(
             ((df["skills_match_score"] < 0) | (df["skills_match_score"] > 1)).sum()
@@ -138,9 +135,8 @@ def validate_dataset(data_path):
     if any(v > 0 for v in non_critical_numeric.values()):
         Logger.warning(f"Non-critical numeric issues found: {non_critical_numeric}")
 
-   
     # Categorical sanity (WARNING only)
-   
+
     invalid_education = set(df["education_level"].unique()) - EDUCATION_LEVELS
     invalid_shortlisted = set(df["shortlisted"].unique()) - SHORTLISTED_VALUES
 
@@ -161,7 +157,7 @@ def validate_dataset(data_path):
         )
 
     # Final summary
-   
+
     Logger.info("Validation summary:")
     Logger.info(json.dumps(report, indent=2))
 
@@ -170,8 +166,8 @@ def validate_dataset(data_path):
     return report
 
 
-
 # Write validation report
+
 
 def write_validation_report(report, output_dir):
     output_dir.mkdir(parents=True, exist_ok=True)

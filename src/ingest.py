@@ -8,12 +8,12 @@ import kagglehub
 
 Logger = logging.getLogger(__name__)
 
-def ingest_from_kaggle(raw_data_dir, dataset_id) -> Path:
 
+def ingest_from_kaggle(raw_data_dir, dataset_id) -> Path:
     """
     Function for ingesting data from kaggle into local raw data directory
 
-    Args: 
+    Args:
         raw_data_dir: Path object to the local raw data directory
         dataset_id: Kaggle dataset identifier
 
@@ -29,7 +29,7 @@ def ingest_from_kaggle(raw_data_dir, dataset_id) -> Path:
 
     csv_files = []
     for file in downloaded_path.iterdir():
-        if not file.suffix=='.csv':
+        if not file.suffix == ".csv":
             raise RuntimeError("No CSV files found in Kaggle dataset")
 
         csv_files.append(file)
@@ -39,13 +39,13 @@ def ingest_from_kaggle(raw_data_dir, dataset_id) -> Path:
     destination_file = raw_data_dir / source_file.name
 
     if not destination_file.exists():
-        shutil.copy(source_file, destination_file) #copies the file to destination
+        shutil.copy(source_file, destination_file)  # copies the file to destination
         Logger.info(f"Copied file to {destination_file}")
     else:
         Logger.info(f"File already exists, skipping copy: {destination_file}")
 
-    # Sanity check for the data 
-        
+    # Sanity check for the data
+
     df = pd.read_csv(destination_file)
 
     if df.empty:
@@ -75,31 +75,27 @@ def ingest_from_kaggle(raw_data_dir, dataset_id) -> Path:
     return destination_file
 
 
-
 INGESTION_HANDLER = {
     "kaggle": ingest_from_kaggle,
 }
 
 
-def ingest_data(raw_data_dir, dataset_id, source = "kaggle") -> Path:
-    
+def ingest_data(raw_data_dir, dataset_id, source="kaggle") -> Path:
     """
     Data ingestion function
 
-    Args: 
+    Args:
         source: str of the data source (in this project only used "kaggle")
         raw_data_dir: Path object to the folder where the data is stored locally.
 
     Returns: Path object pointing to the ingested data file.
     """
 
-    raw_data_dir.mkdir(parents=True,exist_ok=True) # ensure the raw data folder exist
+    raw_data_dir.mkdir(parents=True, exist_ok=True)  # ensure the raw data folder exist
 
-    try: 
-        Handler = INGESTION_HANDLER[source] # gives the ingestion function 
+    try:
+        Handler = INGESTION_HANDLER[source]  # gives the ingestion function
     except KeyError:
         raise ValueError(f"Unsupported data source: {source}")
-    
 
-    return Handler(raw_data_dir,dataset_id)
-   
+    return Handler(raw_data_dir, dataset_id)

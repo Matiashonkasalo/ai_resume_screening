@@ -4,10 +4,9 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from xgboost import XGBClassifier
 
 
-
 def build_model(model_name, params, class_weight=None):
 
-    params = params.copy() 
+    params = params.copy()
 
     if model_name == "random_forest":
 
@@ -26,17 +25,9 @@ def build_model(model_name, params, class_weight=None):
         if class_weight == "balanced":
             params.setdefault("scale_pos_weight", 1)
 
-        model = XGBClassifier(
-            eval_metric="logloss",
-            **params
-        )
+        model = XGBClassifier(eval_metric="logloss", **params)
 
     else:
         raise ValueError(f"Unsupported model: {model_name}")
 
-    return Pipeline([
-        ("imputer", SimpleImputer(strategy="median")),
-        ("model", model)
-    ])
-
-
+    return Pipeline([("imputer", SimpleImputer(strategy="median")), ("model", model)])

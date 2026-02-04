@@ -15,7 +15,6 @@ from src.models import build_model
 from src.evaluate import plot_roc_curve
 import time
 
-
 Logger = logging.getLogger(__name__)
 
 
@@ -24,7 +23,6 @@ def train(config):
     Train, evaluate, and register a model using Optuna + MLflow.
     """
 
-    
     # Extract values from config
     model_name = config["model"]["selected"]
     model_cfg = config["models"][model_name]
@@ -41,9 +39,9 @@ def train(config):
     artifacts_dir = Path(config["data"]["artifacts_dir"])
 
     Logger.info(f"Starting training for model: {model_name}")
-    
+
     # Load data splits
-   
+
     X_train = pd.read_csv(processed_dir / "X_train.csv")
     y_train = pd.read_csv(processed_dir / "y_train.csv").squeeze()
 
@@ -53,7 +51,6 @@ def train(config):
     X_test = pd.read_csv(processed_dir / "X_test.csv")
     y_test = pd.read_csv(processed_dir / "y_test.csv").squeeze()
 
-
     # MLflow run
     start_time = time.time()
 
@@ -61,7 +58,6 @@ def train(config):
     timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
 
     run_name = f"{experiment_name}_{model_name}_{timestamp}"
-
 
     with mlflow.start_run(run_name=run_name):
 
@@ -82,7 +78,7 @@ def train(config):
                 model_name=model_name,
                 n_trials=n_trials,
             )
-            
+
             model_params = {**default_params, **best_params}
             mlflow.log_metric("cv_f1", best_cv_score)
             mlflow.log_params(best_params)
@@ -90,12 +86,7 @@ def train(config):
             Logger.info("Hyperparameter tuning disabled")
             model_params = default_params
 
-
-        model = build_model(
-            model_name,
-            model_params,
-            class_weight=class_weight
-        )
+        model = build_model(model_name, model_params, class_weight=class_weight)
 
         model.fit(X_train, y_train)
 
@@ -177,6 +168,5 @@ def train(config):
 
         training_time = time.time() - start_time
         mlflow.log_metric("training_time_seconds", training_time)
-
 
     return str(run_dir)

@@ -18,12 +18,14 @@ def plot_confusion_matrix(y_true, y_pred, labels=None):
 
     return fig
 
+
 def generate_classification_report(y_true, y_pred):
     """
     Return classification report as string.
     """
 
     return classification_report(y_true, y_pred)
+
 
 def plot_roc_curve(model, X_test, y_test):
     """

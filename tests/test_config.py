@@ -2,14 +2,13 @@ import yaml
 from src.config import load_config
 import pytest
 
+
 def test_load_valid_config(tmp_path):
 
     config_data = {
         "experiment": {"name": "test_exp"},
         "model": {"selected": "random_forest"},
-        "models": {
-            "random_forest": {"class_weight": "balanced"}
-        },
+        "models": {"random_forest": {"class_weight": "balanced"}},
         "tuning": {"enabled": True, "n_trials": 5},
         "data": {"processed_dir": "data", "artifacts_dir": "artifacts"},
     }
@@ -22,8 +21,6 @@ def test_load_valid_config(tmp_path):
     config = load_config(config_file)
 
     assert config["model"]["selected"] == "random_forest"
-
-
 
 
 def test_invalid_model_name(tmp_path):
@@ -50,7 +47,7 @@ def test_selected_model_missing_in_models_section(tmp_path):
     config_data = {
         "experiment": {"name": "test_exp"},
         "model": {"selected": "random_forest"},
-        "models": {},  
+        "models": {},
         "tuning": {"enabled": True, "n_trials": 5},
         "data": {"processed_dir": "data", "artifacts_dir": "artifacts"},
     }
@@ -69,9 +66,7 @@ def test_valid_config_without_class_weight(tmp_path):
     config_data = {
         "experiment": {"name": "test_exp"},
         "model": {"selected": "random_forest"},
-        "models": {
-            "random_forest": {}
-        },
+        "models": {"random_forest": {}},
         "tuning": {"enabled": True, "n_trials": 5},
         "data": {"processed_dir": "data", "artifacts_dir": "artifacts"},
     }
