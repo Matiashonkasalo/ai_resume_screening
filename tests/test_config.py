@@ -1,4 +1,3 @@
-from pathlib import Path
 import yaml
 from src.config import load_config
 import pytest

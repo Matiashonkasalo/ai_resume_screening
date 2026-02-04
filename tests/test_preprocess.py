@@ -26,7 +26,7 @@ def test_preprocess_creates_splits(tmp_path):
 
     output_dir = tmp_path / "processed"
 
-    result = preprocess_data(data_file, output_dir)
+    preprocess_data(data_file, output_dir)
 
     assert (output_dir / "X_train.csv").exists()
     assert (output_dir / "X_val.csv").exists()

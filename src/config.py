@@ -1,4 +1,3 @@
-from pathlib import Path
 import yaml
 from src.validate_config import validate_config
 
@@ -7,6 +6,6 @@ def load_config(path):
         config = yaml.safe_load(f)
 
     validate_config(config)
-    
+
     return config
 
