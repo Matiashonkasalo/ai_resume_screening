@@ -207,11 +207,5 @@ Each training run produces:
 - GitHub Actions
 - uv dependency manager
 
----
 
-## Reproducibility
-
-All dependencies are locked using uv, ensuring deterministic environments across local development, CI, and containerized execution.
-
----
 
