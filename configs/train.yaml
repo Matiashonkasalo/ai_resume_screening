@@ -1,0 +1,36 @@
+experiment:
+  name: resume_screening
+
+model:
+  selected: random_forest   
+
+models:
+  random_forest:
+    class_weight: balanced
+    n_estimators: 200
+    max_depth: 10
+
+  xgboost:
+    n_estimators: 300
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+
+  adaboost:
+    n_estimators: 150
+    learning_rate: 0.8
+
+tuning:
+  enabled: true
+  n_trials: 5
+
+data:
+  processed_dir: /opt/airflow/data/processed
+  artifacts_dir: /opt/airflow/artifacts
+
+training:
+  random_state: 42
+
+evaluation:
+  log_confusion_matrix: true
+  log_classification_report: true
