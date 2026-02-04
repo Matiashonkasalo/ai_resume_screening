@@ -43,7 +43,7 @@ This project simulates an automated pipeline capable of:
 
 ## Dataset 
 
-Link to dataset:
+Link:
 - https://www.kaggle.com/datasets/sonalshinde123/ai-driven-resume-screening-dataset
 
 Data ingestion is automated through the Kaggle API within the Airflow pipeline.
@@ -209,6 +209,7 @@ Each training run produces:
 - Black
 - GitHub Actions
 - uv dependency manager
+
 
 
 
