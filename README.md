@@ -41,9 +41,12 @@ This project simulates an automated pipeline capable of:
 
 ---
 
-## Dataset Schema
+## Dataset 
 
-The dataset contains structured features extracted from resumes and a binary target indicating whether a candidate was shortlisted.
+Link to dataset:
+- https://www.kaggle.com/datasets/sonalshinde123/ai-driven-resume-screening-dataset
+
+Data ingestion is automated through the Kaggle API within the Airflow pipeline.
 
 ### Features
 
@@ -206,6 +209,7 @@ Each training run produces:
 - Black
 - GitHub Actions
 - uv dependency manager
+
 
 
 
